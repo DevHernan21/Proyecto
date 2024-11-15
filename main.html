@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Principal</title>
+    <link rel="stylesheet" href="main-styles.css">
+    <!-- Agregamos Font Awesome para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav>
+            <div class="logo">Aplicación Web</div>
+            <div class="user-info">
+                <span id="username-display">Dr. Usuario</span>
+                <button id="logout-btn">Cerrar Sesión</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Contenedor principal -->
+    <div class="main-container">
+        <!-- Panel izquierdo -->
+        <div class="left-panel">
+            <button id="mis-pacientes-btn" class="main-btn">
+                <i class="fas fa-users"></i>
+                Mis Pacientes
+            </button>
+            <div id="patients-list" class="patients-list hidden">
+                <!-- Lista de pacientes (se llenará dinámicamente) -->
+            </div>
+        </div>
+
+        <!-- Panel central -->
+        <div class="content-panel">
+            <div id="patient-info" class="patient-info hidden">
+                <h2>Datos del Paciente</h2>
+                <div class="patient-details">
+                    <p><strong>Nombre:</strong> <span id="patient-name">-</span></p>
+                    <p><strong>ID:</strong> <span id="patient-id">-</span></p>
+                    <p><strong>Edad:</strong> <span id="patient-age">-</span></p>
+                    <p><strong>Historia Clínica:</strong> <span id="patient-history">-</span></p>
+                </div>
+                <div id="patient-evolutions" class="patient-evolutions"></div>
+                <div id="patient-prescriptions" class="patient-prescriptions"></div>
+                <div id="patient-orders" class="patient-orders"></div>
+            </div>
+        </div>
+
+        <!-- Panel derecho con botones de acción -->
+        <div class="right-panel">
+            <button class="action-btn" id="register-evolution">
+                <i class="fas fa-notes-medical"></i>
+                Registrar Evolución
+            </button>
+            <button class="action-btn" id="generate-prescription">
+                <i class="fas fa-prescription"></i>
+                Generar Receta Digital
+            </button>
+            <button class="action-btn" id="generate-order">
+                <i class="fas fa-file-medical"></i>
+                Generar Pedido Médico
+            </button>
+        </div>
+    </div>
+
+    <!-- Agregar esto justo antes del cierre del body en main.html -->
+    <!-- Modales -->
+    <div id="evolution-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Registrar Evolución</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="evolution-form">
+                    <div class="form-group">
+                        <label for="evolution-date">Fecha:</label>
+                        <input type="date" id="evolution-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="evolution-notes">Notas de Evolución:</label>
+                        <textarea id="evolution-notes" rows="4" required></textarea>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="submit" class="btn-primary">Guardar</button>
+                        <button type="button" class="btn-secondary close-modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="prescription-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Generar Receta Digital</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="prescription-form">
+                    <div class="form-group">
+                        <label for="medication">Medicamento:</label>
+                        <input type="text" id="medication" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dosage">Dosis:</label>
+                        <input type="text" id="dosage" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="duration">Duración:</label>
+                        <input type="text" id="duration" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="instructions">Instrucciones:</label>
+                        <textarea id="instructions" rows="3" required></textarea>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="submit" class="btn-primary">Generar Receta</button>
+                        <button type="button" class="btn-secondary close-modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="medical-order-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Generar Pedido Médico</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="medical-order-form">
+                    <div class="form-group">
+                        <label for="study-type">Tipo de Estudio:</label>
+                        <select id="study-type" required>
+                            <option value="">Seleccione un tipo</option>
+                            <option value="laboratory">Análisis de Laboratorio</option>
+                            <option value="imaging">Estudios de Imagen</option>
+                            <option value="other">Otros</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="study-details">Detalles del Estudio:</label>
+                        <textarea id="study-details" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="urgency">Urgencia:</label>
+                        <select id="urgency" required>
+                            <option value="normal">Normal</option>
+                            <option value="urgent">Urgente</option>
+                        </select>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="submit" class="btn-primary">Generar Pedido</button>
+                        <button type="button" class="btn-secondary close-modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="main-script.js"></script>
+    <script type="module" src="main-script.js"></script>
+</body>
+
+</html>
